@@ -1,0 +1,55 @@
+Функция для чтения файла и отображения его содержимого
+def read_file(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+    for index, line in enumerate(lines):
+        print(f"{index + 1}: {line.strip()}")
+    return lines
+
+
+Функция для записи данных в файл
+def write_to_file(filename, lines):
+    with open(filename, 'w', encoding='utf-8') as file:
+        file.writelines(lines)
+
+
+Функция для копирования строки из одного файла в другой
+def copy_line(source_file, target_file, line_number):
+    lines = read_file(source_file)
+    if 1 <= line_number <= len(lines):
+        line_to_copy = lines[line_number - 1]
+        with open(target_file, 'a', encoding='utf-8') as file:
+            file.write(line_to_copy)
+        print(f"Строка {line_number} успешно скопирована из {source_file} в {target_file}.")
+    else:
+        print(f"Некорректный номер строки: {line_number}.")
+
+
+Интерфейс для взаимодействия с пользователем
+
+def main():
+    source_file = input("Введите имя исходного файла: ")
+    target_file = input("Введите имя файла назначения: ")
+    
+    while True:
+        print("\n1. Показать содержимое исходного файла")
+        print("2. Скопировать строку из исходного файла в файл назначения")
+        print("3. Выйти")
+        
+        choice = input("Введите ваш выбор: ")
+        
+        if choice == '1':
+            read_file(source_file)
+        elif choice == '2':
+            line_number = int(input("Введите номер строки для копирования: "))
+            copy_line(source_file, target_file, line_number)
+        elif choice == '3':
+            print("Выход из программы.")
+            break
+        else:
+            print("Некорректный выбор. Попробуйте снова.")
+
+if __name__ == "__main__":
+    main()
+
+
